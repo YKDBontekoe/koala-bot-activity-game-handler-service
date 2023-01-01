@@ -1,4 +1,4 @@
-﻿namespace Koala.Presence.Publisher.Service;
+﻿namespace Koala.Activity.Game.Handler.Service;
 
 public class Class1
 {
