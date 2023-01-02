@@ -1,0 +1,22 @@
+﻿version: '3.8'
+services:
+  game-handler-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: game-handler-service
+    ports:
+      - "5000:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    networks:
+      - koala-network
+  redis:
+    image: redis:7.0.7-bullseye
+    ports:
+      - "6379:6379"
+    networks:
+      - koala-network
+networks:
+  app-network:
+    driver: bridge

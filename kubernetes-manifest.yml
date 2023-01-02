@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: koala-game-handler-service
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: koala-game-handler-service
+  template:
+    metadata:
+      labels:
+        app: koala-game-handler-service
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: koala-game-handler-service
+          image: ykdbonteregistry.azurecr.io/koala-game-handler-service:latest
+          resources:
+            limits:
+              cpu: 100m
+              memory: 500Mi
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5001
+          env:
+            - name: DOTNET_ENVIRONMENT
+              value: "Production"
+        - name: redis
+          image: redis:7.0.7-bullseye
+          resources:
+            limits:
+              cpu: 100m
+              memory: 500Mi
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 6379
