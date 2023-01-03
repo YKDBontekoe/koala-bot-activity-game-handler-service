@@ -18,6 +18,10 @@ spec:
         app: koala-game-handler-service
     spec:
       restartPolicy: Always
+      volumes:
+        - name: redis-config
+          configMap:
+            name: redis-configmap
       containers:
         - name: koala-game-handler-service
           image: ykdbonteregistry.azurecr.io/koala-activity-game-handler-service:latest
@@ -29,8 +33,14 @@ spec:
           ports:
             - containerPort: 5001
           env:
-            - name: DOTNET_ENVIRONMENT
-              value: "Production"
+            - name: REDIS_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: redis-configmap
+                  key: host
+          volumeMounts:
+            - name: redis-config
+              mountPath: /etc/redis-config
         - name: redis
           image: redis:7.0.7-bullseye
           resources:
@@ -42,3 +52,7 @@ spec:
             - containerPort: 6379
       imagePullSecrets:
           - name: ykdbonteregistry
+volumes:
+  - name: config
+    configMap:
+      name: koala-game-handler-service-config
