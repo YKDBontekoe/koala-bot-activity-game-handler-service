@@ -3,7 +3,7 @@ WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0-bullseye-slim AS build
 WORKDIR /src
-COPY ["Koala.Activity.Handler.Game.Service.csproj", "./"]
+COPY ["Koala.Activity.Game.Handler.Service.csproj", "./"]
 RUN dotnet restore "Koala.Activity.Game.Handler.Service.csproj"
 COPY . .
 WORKDIR "/src"
