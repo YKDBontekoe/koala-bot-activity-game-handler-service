@@ -40,3 +40,5 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 6379
+          imagePullSecrets:
+            - name: ykdbonteregistry
