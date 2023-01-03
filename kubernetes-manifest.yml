@@ -21,7 +21,7 @@ spec:
       volumes:
         - name: redis-config
           configMap:
-            name: redis-configmap
+            name: koala-game-handler-service-config
       containers:
         - name: koala-game-handler-service
           image: ykdbonteregistry.azurecr.io/koala-activity-game-handler-service:latest
@@ -52,7 +52,3 @@ spec:
               mountPath: /etc/redis-config
       imagePullSecrets:
           - name: ykdbonteregistry
-volumes:
-  - name: config
-    configMap:
-      name: koala-game-handler-service-config
