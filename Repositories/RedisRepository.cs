@@ -21,12 +21,17 @@ public class RedisRepository : ICacheRepository
 
     public Task SetAsync(string key, string value)
     {
-        var cacheEntryOptions = new DistributedCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromDays(1));
+        var cacheEntryOptions = new DistributedCacheEntryOptions().SetSlidingExpiration(TimeSpan.MaxValue);
         return _cache.SetAsync(key, Encoding.UTF8.GetBytes(value), cacheEntryOptions);
     }
 
     public Task RemoveAsync(string key)
     {
         return _cache.RemoveAsync(key);
+    }
+
+    public async Task<bool> IsEmptyAsync()
+    {
+        return await _cache.GetAsync("Warframe") is null;
     }
 }

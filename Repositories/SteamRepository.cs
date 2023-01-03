@@ -12,19 +12,19 @@ public class SteamRepository : ISteamRepository
 {
     private readonly ICacheRepository _cacheRepository;
     private readonly HttpClient _httpClient;
-    private readonly string _baseUrl;
+    private readonly SteamOptions _steamOptions;
 
     public SteamRepository(ICacheRepository cacheRepository, IOptions<SteamOptions> steamOptions)
     {
         _cacheRepository = cacheRepository;
-        _baseUrl += steamOptions.Value.BaseUrl + "?key=" + steamOptions.Value.ApiKey;
+        _steamOptions = steamOptions.Value;
         _httpClient = new HttpClient();
+        _httpClient.BaseAddress = new Uri(steamOptions.Value.BaseUrl);
     }
 
     public async Task<App> GetGameByName(string name)
     {
         var gameId = await _cacheRepository.GetAsync(name);
-
         if (string.IsNullOrEmpty(gameId))
         {
             throw new KeyNotFoundException($"Game with name {name} not found");
@@ -39,8 +39,8 @@ public class SteamRepository : ISteamRepository
 
     public async Task<IEnumerable<App>> GetAllAppsAsync()
     {
-        var url = _baseUrl + "&format=json";
-        var response = await _httpClient.GetAsync(url);
+        var parameters =  "?key=" + _steamOptions.ApiKey + "&format=json";
+        var response = await _httpClient.GetAsync("ISteamApps/GetAppList/v2/" + parameters);
         response.EnsureSuccessStatusCode();
         var content = await response.Content.ReadAsStringAsync();
 

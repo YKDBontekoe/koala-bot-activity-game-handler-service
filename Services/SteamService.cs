@@ -34,6 +34,11 @@ public class SteamService : ISteamService
 
     public async Task<GameInfoOutgoing?> GetGameInfoAsync(string gameName)
     {
+        if (await _cacheRepository.IsEmptyAsync())
+        {
+            await UpdateGameCacheAsync();
+        }
+        
         var gameInfo = new GameInfoOutgoing();
         var appId = await _steamRepository.GetGameByName(gameName);
         if (appId == null)

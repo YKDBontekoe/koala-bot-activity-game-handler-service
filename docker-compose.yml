@@ -18,5 +18,5 @@ services:
     networks:
       - koala-network
 networks:
-  app-network:
+  koala-network:
     driver: bridge

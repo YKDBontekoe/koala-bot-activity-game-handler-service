@@ -51,6 +51,7 @@ internal static class Program
         services.AddOptions();
         services.Configure<ServiceBusOptions>(configuration.GetSection(ServiceBusOptions.ServiceBus));
         services.Configure<RedisOptions>(configuration.GetSection(RedisOptions.Redis));
+        services.Configure<SteamOptions>(configuration.GetSection(SteamOptions.Steam));
     }
 
     // Configure the Azure Service Bus client with the connection string

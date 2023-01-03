@@ -3,7 +3,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace Koala.ActivityGameHandlerService;
 
-public class SteamGameCacheUpdateWorker : IHostedService, IDisposable
+public class SteamGameCacheUpdateWorker : IHostedService
 {
     private Timer _timer;
     private readonly ISteamService _steamService;
@@ -15,16 +15,15 @@ public class SteamGameCacheUpdateWorker : IHostedService, IDisposable
 
     public Task StartAsync(CancellationToken stoppingToken)
     {
-        _timer = new Timer(UpdateCache, null, TimeSpan.Zero, TimeSpan.FromDays(1));
-
+        _timer = new Timer(async _ => await UpdateCache(), null, TimeSpan.FromMinutes(1), TimeSpan.FromHours(24));
+        
         return Task.CompletedTask;
     }
 
-    private void UpdateCache(object state)
+    private Task UpdateCache()
     {
-
         // Call the service here
-        _steamService.UpdateGameCacheAsync();
+        return _steamService.UpdateGameCacheAsync();
     }
 
 
@@ -33,10 +32,5 @@ public class SteamGameCacheUpdateWorker : IHostedService, IDisposable
         _timer.Change(Timeout.Infinite, 0);
 
         return Task.CompletedTask;
-    }
-
-    public void Dispose()
-    {
-        _timer.Dispose();
     }
 }
