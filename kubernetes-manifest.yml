@@ -20,7 +20,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: koala-game-handler-service
-          image: ykdbonteregistry.azurecr.io/koala-game-handler-service:latest
+          image: ykdbonteregistry.azurecr.io/koala-activity-game-handler-service:latest
           resources:
             limits:
               cpu: 100m
