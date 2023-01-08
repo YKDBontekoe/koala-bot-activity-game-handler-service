@@ -32,6 +32,12 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 5001
+          env:
+            - name: REDIS_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: koala-game-handler-service-config
+                  key: host
         - name: redis
           image: redis:7.0.7-bullseye
           resources:
@@ -41,14 +47,5 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 6379
-          env:
-            - name: REDIS_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: redis-configmap
-                  key: host
-          volumeMounts:
-            - name: redis-config
-              mountPath: /etc/redis-config
       imagePullSecrets:
-          - name: ykdbonteregistry
+        - name: ykdbonteregistry
