@@ -4,11 +4,11 @@ using Microsoft.Extensions.Caching.Distributed;
 
 namespace Koala.ActivityGameHandlerService.Repositories;
 
-public class RedisRepository : ICacheRepository
+public class CacheRepository : ICacheRepository
 {
     private readonly IDistributedCache _cache;
 
-    public RedisRepository(IDistributedCache cache)
+    public CacheRepository(IDistributedCache cache)
     {
         _cache = cache;
     }

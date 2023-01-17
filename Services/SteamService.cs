@@ -29,6 +29,8 @@ public class SteamService : ISteamService
             {
                 await _cacheRepository.SetAsync(game.name, game.appid.ToString());
             }
+            
+            Console.WriteLine("Updated game cache");
         });
     }
 

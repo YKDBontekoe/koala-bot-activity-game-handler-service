@@ -72,7 +72,7 @@ internal static class Program
     // Configure repositories
     private static void ConfigureRepositories(IServiceCollection services)
     {
-        services.AddTransient<ICacheRepository, RedisRepository>();
+        services.AddTransient<ICacheRepository, CacheRepository>();
         services.AddTransient<ISteamRepository, SteamRepository>();
         services.AddTransient<IScraperRepository, SteamScraperRepository>();
     }
