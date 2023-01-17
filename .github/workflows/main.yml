@@ -18,7 +18,6 @@ jobs:
       env:
         ServiceBus.ConnectionString: ${{ secrets.SERVICE_BUS_CONNECTION_STRING }}
         Steam.ApiKey: ${{ secrets.STEAM_API_KEY }}
-        Redis.ConnectionString: ${{ secrets.REDIS_CONNECTION_STRING }}
     - name: Login to azure
       uses: azure/docker-login@v1
       with:
