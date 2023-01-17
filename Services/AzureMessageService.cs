@@ -58,9 +58,11 @@ private readonly ServiceBusClient _serviceBusClient;
 
     private async Task MessagesHandler(ProcessMessageEventArgs args)
     {
+        if (args.Message.Body == null || args.Message.Body.ToString().Equals("null")) return;
+        
         // Process the message.
         var body = args.Message.Body.ToString();
-        
+
         // Implement logic to process the activity
         var sender = _serviceBusClient.CreateSender(_serviceBusOptions.ConsumerQueueName);
         

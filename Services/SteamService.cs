@@ -54,6 +54,11 @@ public class SteamService : ISteamService
         var gameUrl = sb.ToString();
         var game = await _scraperRepository.GetGameDataFromUrl(gameUrl);
 
+        if (game is null)
+        {
+            return gameInfo;
+        }
+        
         gameInfo.Developers = game.Developers;
         gameInfo.Tags = game.Tags;
         gameInfo.Price = game.Price;
