@@ -15,9 +15,14 @@ public class SteamGameCacheUpdateWorker : IHostedService
 
     public Task StartAsync(CancellationToken stoppingToken)
     {
-        _timer = new Timer(async _ => await UpdateCache(), null, TimeSpan.FromMinutes(1), TimeSpan.FromHours(24));
+        _timer = new Timer(TimerCallback, null, TimeSpan.FromMinutes(1), TimeSpan.FromHours(24));
         
         return Task.CompletedTask;
+    }
+
+    private async void TimerCallback(object? _)
+    {
+        await UpdateCache();
     }
 
     private Task UpdateCache()

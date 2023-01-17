@@ -28,30 +28,5 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 5001
-          env:
-            - name: REDIS_HOST
-              value: "redis-service.koala-activity-game-handler-service.svc.cluster.local"
-        - name: redis
-          image: redis:7.0.7-bullseye
-          resources:
-            limits:
-              cpu: 100m
-              memory: 500Mi
-          imagePullPolicy: Always
-          ports:
-            - containerPort: 6379
       imagePullSecrets:
         - name: ykdbonteregistry
-          
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: redis-service
-spec:
-    selector:
-        app: koala-game-handler-service
-    ports:
-        - protocol: TCP
-          port: 6379
-          targetPort: 6379

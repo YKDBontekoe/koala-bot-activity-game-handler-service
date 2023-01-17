@@ -39,7 +39,7 @@ internal static class Program
     {
         ConfigureOptions(services, hostContext.Configuration);
         ConfigureServiceBus(services);
-        ConfigureRedis(services);
+        ConfigureCache(services);
         ConfigureRepositories(services);
         ConfigureServices(services);
         ConfigureHostedServices(services);
@@ -63,13 +63,10 @@ internal static class Program
         });
     }
     
-    // Configure Redis with the connection string
-    private static void ConfigureRedis(IServiceCollection services)
+    // Configure Cache
+    private static void ConfigureCache(IServiceCollection services)
     {
-        services.AddStackExchangeRedisCache(options =>
-        {
-            options.Configuration = services.BuildServiceProvider().GetRequiredService<IOptions<RedisOptions>>().Value.ConnectionString;
-        });
+        services.AddDistributedMemoryCache();
     }
     
     // Configure repositories
